@@ -16,6 +16,7 @@ import {
   BarChart3,
   Landmark,
   FolderTree,
+  HandCoins,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
@@ -28,6 +29,7 @@ const navItems = [
   { to: "/budgets", icon: PiggyBank, label: "תקציבים" },
   { to: "/maaser", icon: Calculator, label: "מעשרות" },
   { to: "/goals", icon: Target, label: "יעדי חיסכון" },
+  { to: "/debts", icon: HandCoins, label: "חובות והלוואות" },
   { to: "/recurring", icon: RefreshCw, label: "תשלומים חוזרים" },
   { to: "/institutional", icon: Landmark, label: "מוסדיים" },
   { to: "/insights", icon: TrendingUp, label: "תובנות" },

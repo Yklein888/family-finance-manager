@@ -18,6 +18,7 @@ import BankingPage from "@/pages/Banking";
 import ReportsPage from "@/pages/Reports";
 import InstitutionalPage from "@/pages/Institutional";
 import CategoriesPage from "@/pages/Categories";
+import DebtsLoansPage from "@/pages/DebtsLoans";
 import NotFound from "@/pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -51,6 +52,7 @@ const App = () => (
             <Route path="/budgets" element={<ProtectedRoute><BudgetsPage /></ProtectedRoute>} />
             <Route path="/maaser" element={<ProtectedRoute><MaaserPage /></ProtectedRoute>} />
             <Route path="/goals" element={<ProtectedRoute><GoalsPage /></ProtectedRoute>} />
+            <Route path="/debts" element={<ProtectedRoute><DebtsLoansPage /></ProtectedRoute>} />
             <Route path="/recurring" element={<ProtectedRoute><RecurringPage /></ProtectedRoute>} />
             <Route path="/insights" element={<ProtectedRoute><InsightsPage /></ProtectedRoute>} />
             <Route path="/institutional" element={<ProtectedRoute><InstitutionalPage /></ProtectedRoute>} />
