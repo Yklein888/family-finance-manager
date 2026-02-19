@@ -182,6 +182,7 @@ export default function TransactionsPage() {
           </DialogContent>
         </Dialog>
       </div>
+      </div>
 
       {/* Filters */}
       <div className="flex items-center gap-3 flex-wrap">
