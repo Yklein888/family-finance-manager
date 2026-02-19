@@ -17,6 +17,7 @@ import SettingsPage from "@/pages/SettingsPage";
 import BankingPage from "@/pages/Banking";
 import ReportsPage from "@/pages/Reports";
 import InstitutionalPage from "@/pages/Institutional";
+import CategoriesPage from "@/pages/Categories";
 import NotFound from "@/pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -46,6 +47,7 @@ const App = () => (
             <Route path="/auth" element={<AuthRoute />} />
             <Route path="/" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
             <Route path="/transactions" element={<ProtectedRoute><TransactionsPage /></ProtectedRoute>} />
+            <Route path="/categories" element={<ProtectedRoute><CategoriesPage /></ProtectedRoute>} />
             <Route path="/budgets" element={<ProtectedRoute><BudgetsPage /></ProtectedRoute>} />
             <Route path="/maaser" element={<ProtectedRoute><MaaserPage /></ProtectedRoute>} />
             <Route path="/goals" element={<ProtectedRoute><GoalsPage /></ProtectedRoute>} />

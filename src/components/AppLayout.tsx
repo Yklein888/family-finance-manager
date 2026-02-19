@@ -15,6 +15,7 @@ import {
   Building2,
   BarChart3,
   Landmark,
+  FolderTree,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
@@ -23,6 +24,7 @@ import { Button } from "@/components/ui/button";
 const navItems = [
   { to: "/", icon: LayoutDashboard, label: "דשבורד" },
   { to: "/transactions", icon: ArrowLeftRight, label: "תנועות" },
+  { to: "/categories", icon: FolderTree, label: "קטגוריות" },
   { to: "/budgets", icon: PiggyBank, label: "תקציבים" },
   { to: "/maaser", icon: Calculator, label: "מעשרות" },
   { to: "/goals", icon: Target, label: "יעדי חיסכון" },
