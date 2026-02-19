@@ -1,73 +1,112 @@
-# Welcome to your Lovable project
+# 💰 FinFamily - מערכת ניהול פיננסי משפחתי
 
-## Project info
+מערכת ניהול פיננסי מקיפה בעברית עם תמיכה במעשרות, יעדי חיסכון, סריקת קבלות ועוד.
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+## ✨ פיצ'רים עיקריים
 
-## How can I edit this code?
+### 💳 ניהול בסיסי
+- **תנועות**: רישום והצגת כל ההכנסות וההוצאות
+- **קטגוריות**: 100+ קטגוריות מובנות בעברית
+- **חשבונות**: ניהול חשבונות בנק מרובים
+- **תקציבים**: הגדרת והתראות על תקציבים
 
-There are several ways of editing your application.
+### 📊 ניתוח ודוחות
+- **Dashboard**: סיכום פיננסי מלא
+- **דוחות**: גרפים וניתוחים מתקדמים
+- **תובנות**: המלצות חכמות
 
-**Use Lovable**
+### ✡️ מעשרות
+- **חישוב מעשר**: חישוב אוטומטי של 10% מההכנסות
+- **מעקב תשלומים**: רישום תשלומי מעשר
+- **יתרות**: מעקב אחר יתרות מעשר
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+### 🎯 יעדי חיסכון
+- **הגדרת יעדים**: חתונה, דירה, רכב, חירום
+- **מעקב התקדמות**: Progress bars ויזואליים
+- **המלצות**: הפקדה חודשית מומלצת
 
-Changes made via Lovable will be committed automatically to this repo.
+### 🔁 תשלומים חוזרים
+- **אוטומציה**: תשלומים חוזרים אוטומטיים
+- **תזכורות**: התראות לפני תשלום
+- **Timeline**: תצוגה ויזואלית של תשלומים עתידיים
 
-**Use your preferred IDE**
+### 💼 מוסדיים
+- **פנסיה**: קרנות פנסיה
+- **קופות גמל**: להשקעה ולקצבה
+- **קרנות השתלמות**
+- **ביטוח מנהלים**
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+### 🆕 פיצ'רים מתקדמים
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+#### 📸 סריקת קבלות (OCR)
+- העלאת תמונות קבלות
+- זיהוי אוטומטי של סכום, תאריך וסוחר
+- יצירת תנועה אוטומטית
 
-Follow these steps:
+#### 📤 ייצוא מתקדם
+- **Excel**: ייצוא לקבצי XLSX עם מספר גיליונות
+- **CSV**: ייצוא פשוט לטבלאות
+- גיליונות נפרדים: תנועות, תקציבים, יעדים, מעשרות
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+## 🚀 התקנה
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+### דרישות
+- Node.js 18+
+- חשבון Supabase
 
-# Step 3: Install the necessary dependencies.
-npm i
+### התקנה מהירה
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+\`\`\`bash
+# Clone
+git clone https://github.com/Yklein888/family-finance-manager.git
+cd family-finance-manager
+
+# Install
+npm install
+
+# Configure
+cp .env.example .env
+# Edit .env with your Supabase credentials
+
+# Run
 npm run dev
-```
+\`\`\`
 
-**Edit a file directly in GitHub**
+### Migrations
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+\`\`\`bash
+# Option 1: Supabase Dashboard
+# Go to SQL Editor and run files from supabase/migrations/
 
-**Use GitHub Codespaces**
+# Option 2: CLI
+npx supabase db push
+\`\`\`
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+## 🎨 טכנולוגיות
 
-## What technologies are used for this project?
+- React 18 + TypeScript + Vite
+- TailwindCSS + shadcn/ui
+- Supabase (PostgreSQL + Auth)
+- Recharts
+- XLSX
 
-This project is built with:
+## 📋 Roadmap
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+- [x] ניהול תנועות
+- [x] מעשרות
+- [x] יעדים
+- [x] תשלומים חוזרים
+- [x] מוסדיים
+- [x] OCR קבלות
+- [x] ייצוא Excel
+- [ ] בנקאות פתוחה
+- [ ] אפליקציה מובייל
 
-## How can I deploy this project?
+## 🔗 קישורים
 
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
+- **Live**: https://family-finance-manager-eta.vercel.app
+- **GitHub**: https://github.com/Yklein888/family-finance-manager
 
-## Can I connect a custom domain to my Lovable project?
+---
 
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+**נבנה עם ❤️ בישראל**

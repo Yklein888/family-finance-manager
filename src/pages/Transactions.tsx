@@ -10,6 +10,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { useToast } from "@/hooks/use-toast";
 import { Plus, Search, Filter, ArrowUpDown } from "lucide-react";
+import ReceiptScanner from "@/components/ReceiptScanner";
+import ExcelExporter from "@/components/ExcelExporter";
 
 export default function TransactionsPage() {
   const { user } = useAuth();
@@ -90,10 +92,23 @@ export default function TransactionsPage() {
           <h1 className="text-2xl font-heading font-bold">תנועות</h1>
           <p className="text-muted-foreground text-sm">ניהול הכנסות והוצאות</p>
         </div>
-        <Dialog open={open} onOpenChange={setOpen}>
-          <DialogTrigger asChild>
-            <Button><Plus className="w-4 h-4 ml-2" />תנועה חדשה</Button>
-          </DialogTrigger>
+        <div className="flex gap-2">
+          <ExcelExporter 
+            data={{ transactions }} 
+            filename={`תנועות_${new Date().toISOString().split('T')[0]}.xlsx`}
+          />
+          <ReceiptScanner 
+            onReceiptScanned={(result) => {
+              toast({
+                title: "קבלה נסרקה!",
+                description: `${result.merchant} - ₪${result.amount}`,
+              });
+            }} 
+          />
+          <Dialog open={open} onOpenChange={setOpen}>
+            <DialogTrigger asChild>
+              <Button><Plus className="w-4 h-4 ml-2" />תנועה חדשה</Button>
+            </DialogTrigger>
           <DialogContent className="max-w-md" dir="rtl">
             <DialogHeader>
               <DialogTitle>הוספת תנועה</DialogTitle>

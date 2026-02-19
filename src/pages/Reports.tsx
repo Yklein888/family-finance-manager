@@ -10,6 +10,7 @@ import {
 } from "recharts";
 import { Download } from "lucide-react";
 import { cn } from "@/lib/utils";
+import ExcelExporter from "@/components/ExcelExporter";
 
 const MONTHS_HE = ["ינואר","פברואר","מרץ","אפריל","מאי","יוני","יולי","אוגוסט","ספטמבר","אוקטובר","נובמבר","דצמבר"];
 const COLORS = ["#3B82F6","#10B981","#8B5CF6","#F59E0B","#EF4444","#06B6D4","#EC4899","#14B8A6"];
@@ -108,9 +109,10 @@ export default function ReportsPage() {
               </button>
             ))}
           </div>
-          <Button variant="outline" size="sm" onClick={handleExport}>
-            <Download className="w-4 h-4 ml-1" />ייצוא
-          </Button>
+          <ExcelExporter 
+            data={{ transactions }}
+            filename={`דוח_פיננסי_${new Date().toISOString().split('T')[0]}.xlsx`}
+          />
         </div>
       </div>
 
