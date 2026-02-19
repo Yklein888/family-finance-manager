@@ -16,6 +16,7 @@ import InsightsPage from "@/pages/Insights";
 import SettingsPage from "@/pages/SettingsPage";
 import BankingPage from "@/pages/Banking";
 import ReportsPage from "@/pages/Reports";
+import InstitutionalPage from "@/pages/Institutional";
 import NotFound from "@/pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -50,6 +51,7 @@ const App = () => (
             <Route path="/goals" element={<ProtectedRoute><GoalsPage /></ProtectedRoute>} />
             <Route path="/recurring" element={<ProtectedRoute><RecurringPage /></ProtectedRoute>} />
             <Route path="/insights" element={<ProtectedRoute><InsightsPage /></ProtectedRoute>} />
+            <Route path="/institutional" element={<ProtectedRoute><InstitutionalPage /></ProtectedRoute>} />
             <Route path="/banking" element={<ProtectedRoute><BankingPage /></ProtectedRoute>} />
             <Route path="/reports" element={<ProtectedRoute><ReportsPage /></ProtectedRoute>} />
             <Route path="/settings" element={<ProtectedRoute><SettingsPage /></ProtectedRoute>} />

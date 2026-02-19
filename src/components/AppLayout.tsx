@@ -14,6 +14,7 @@ import {
   ChevronLeft,
   Building2,
   BarChart3,
+  Landmark,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
@@ -26,6 +27,7 @@ const navItems = [
   { to: "/maaser", icon: Calculator, label: "מעשרות" },
   { to: "/goals", icon: Target, label: "יעדי חיסכון" },
   { to: "/recurring", icon: RefreshCw, label: "תשלומים חוזרים" },
+  { to: "/institutional", icon: Landmark, label: "מוסדיים" },
   { to: "/insights", icon: TrendingUp, label: "תובנות" },
   { to: "/reports", icon: BarChart3, label: "דוחות" },
   { to: "/banking", icon: Building2, label: "בנקאות" },
