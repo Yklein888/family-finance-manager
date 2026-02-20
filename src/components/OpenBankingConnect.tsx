@@ -268,10 +268,13 @@ export default function OpenBankingConnect() {
       setSelectedProvider(null);
       setIsConnecting(false);
     },
-    onError: (error) => {
+    onError: (error: any) => {
+      console.error("Connection error:", error);
       toast({
-        title: "שגיאה בחיבור",
-        description: "לא הצלחנו להתחבר. נסה שוב.",
+        title: "⚠️ שגיאה בחיבור",
+        description: error.message?.includes("relation") || error.message?.includes("table") 
+          ? "נראה שטבלאות המסד נתונים חסרות. הרץ את SQL Migrations קודם!"
+          : "לא הצלחנו להתחבר. זהו מצב DEMO - ראה הוראות למעלה.",
         variant: "destructive",
       });
       setIsConnecting(false);
@@ -357,6 +360,39 @@ export default function OpenBankingConnect() {
 
   return (
     <div className="space-y-6">
+      {/* Demo Warning Banner */}
+      <Card className="border-orange-300 bg-orange-50">
+        <CardContent className="pt-6">
+          <div className="flex items-start gap-3">
+            <AlertCircle className="w-6 h-6 text-orange-600 shrink-0 mt-0.5" />
+            <div className="space-y-2">
+              <h3 className="font-semibold text-orange-900">⚠️ מצב הדגמה (DEMO MODE)</h3>
+              <p className="text-sm text-orange-800">
+                כרגע החיבור לבנקים הוא <strong>סימולציה בלבד</strong> ולא חיבור אמיתי. 
+              </p>
+              <div className="bg-white/50 border border-orange-200 rounded p-3 text-sm text-orange-900">
+                <strong>כדי להפעיל חיבור אמיתי:</strong>
+                <ol className="mr-5 mt-2 space-y-1">
+                  <li>1️⃣ הרץ את SQL Migrations במסד הנתונים</li>
+                  <li>2️⃣ השג API Keys מספקי בנקאות פתוחה (Pepper/Salt Edge/Mono)</li>
+                  <li>3️⃣ הוסף את ה-Keys למשתני הסביבה</li>
+                </ol>
+              </div>
+              <p className="text-xs text-orange-700">
+                📖 <a 
+                  href="https://github.com/Yklein888/family-finance-manager/blob/main/BANKING_INTEGRATION.md" 
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="underline hover:text-orange-900 font-medium"
+                >
+                  קרא את המדריך המלא להתקנה →
+                </a>
+              </p>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
       {/* Header */}
       <Card className="border-blue-200 bg-gradient-to-r from-blue-50 to-cyan-50">
         <CardHeader>
