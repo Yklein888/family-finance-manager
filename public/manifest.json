@@ -1,0 +1,127 @@
+{
+  "name": "Family Finance Manager - ניהול פיננסי משפחתי",
+  "short_name": "Finance Manager",
+  "description": "מערכת ניהול פיננסי משפחתי מתקדמת עם AI, Gamification ושיתוף משפחתי",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#2563eb",
+  "orientation": "portrait-primary",
+  "dir": "rtl",
+  "lang": "he",
+  "scope": "/",
+  "icons": [
+    {
+      "src": "/icons/icon-72x72.png",
+      "sizes": "72x72",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/icon-96x96.png",
+      "sizes": "96x96",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/icon-128x128.png",
+      "sizes": "128x128",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/icon-144x144.png",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/icon-152x152.png",
+      "sizes": "152x152",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/icon-384x384.png",
+      "sizes": "384x384",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "הוסף תנועה",
+      "short_name": "תנועה",
+      "description": "הוספת תנועה מהירה",
+      "url": "/transactions?quick=true",
+      "icons": [{ "src": "/icons/shortcut-transaction.png", "sizes": "96x96" }]
+    },
+    {
+      "name": "תקציבים",
+      "short_name": "תקציב",
+      "description": "צפה בתקציבים",
+      "url": "/budgets",
+      "icons": [{ "src": "/icons/shortcut-budget.png", "sizes": "96x96" }]
+    },
+    {
+      "name": "דוחות",
+      "short_name": "דוחות",
+      "description": "דוחות וגרפים",
+      "url": "/reports",
+      "icons": [{ "src": "/icons/shortcut-reports.png", "sizes": "96x96" }]
+    }
+  ],
+  "categories": ["finance", "productivity", "business"],
+  "screenshots": [
+    {
+      "src": "/screenshots/dashboard.png",
+      "sizes": "540x720",
+      "type": "image/png",
+      "platform": "narrow",
+      "label": "דשבורד ראשי"
+    },
+    {
+      "src": "/screenshots/transactions.png",
+      "sizes": "540x720",
+      "type": "image/png",
+      "platform": "narrow",
+      "label": "תנועות וקטגוריזציה"
+    }
+  ],
+  "related_applications": [],
+  "prefer_related_applications": false,
+  "share_target": {
+    "action": "/share",
+    "method": "POST",
+    "enctype": "multipart/form-data",
+    "params": {
+      "title": "title",
+      "text": "text",
+      "url": "url",
+      "files": [
+        {
+          "name": "receipt",
+          "accept": ["image/*", "application/pdf"]
+        }
+      ]
+    }
+  },
+  "features": [
+    "offline-support",
+    "push-notifications",
+    "background-sync",
+    "file-handling"
+  ]
+}

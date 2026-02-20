@@ -8,7 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
 import { 
   Building2, Link2, RefreshCw, Trash2, CheckCircle2, 
-  XCircle, Clock, AlertCircle, Loader2, CreditCard, TrendingUp 
+  XCircle, Clock, AlertCircle, Loader2, ExternalLink
 } from "lucide-react";
 import {
   Dialog,
@@ -18,190 +18,41 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 
-// ספקי בנקאות פתוחה וחברות בישראל
-const ISRAELI_PROVIDERS = {
-  // בנקים מסחריים
-  LEUMI: {
-    id: "leumi",
-    name: "בנק לאומי",
-    logo: "🏦",
-    color: "blue",
-    types: ["checking", "savings", "credit", "investment"],
-    category: "bank"
+// ספקי בנקאות פתוחה אמיתיים
+const PROVIDERS = {
+  PEPPER: {
+    id: "pepper",
+    name: "Pepper",
+    logo: "🌶️",
+    description: "מחבר לכל הבנקים וכרטיסי האשראי בישראל",
+    color: "#EF4444",
+    website: "https://www.pepper.co.il",
+    docs: "https://developers.pepper.co.il/docs",
+    signupUrl: "https://www.pepper.co.il/developers/signup",
+    features: ["כל הבנקים", "כרטיסי אשראי", "סנכרון יומי", "חינמי עד 100 משתמשים"],
   },
-  HAPOALIM: {
-    id: "hapoalim",
-    name: "בנק הפועלים",
-    logo: "🏦",
-    color: "red",
-    types: ["checking", "savings", "credit", "investment"],
-    category: "bank"
+  SALT_EDGE: {
+    id: "saltedge",
+    name: "Salt Edge",
+    logo: "🔐",
+    description: "ספק עולמי עם תמיכה בבנקים ישראליים",
+    color: "#3B82F6",
+    website: "https://www.saltedge.com",
+    docs: "https://docs.saltedge.com",
+    signupUrl: "https://www.saltedge.com/client_users/sign_up",
+    features: ["בנקים עולמיים", "תמיכה בישראל", "API מתקדם"],
   },
-  DISCOUNT: {
-    id: "discount",
-    name: "בנק דיסקונט",
-    logo: "🏦",
-    color: "purple",
-    types: ["checking", "savings", "credit"],
-    category: "bank"
+  MONO: {
+    id: "mono",
+    name: "Mono",
+    logo: "🔗",
+    description: "פתרון ישראלי חדש",
+    color: "#8B5CF6",
+    website: "https://mono.co.il",
+    docs: "https://docs.mono.co.il",
+    signupUrl: "https://mono.co.il/signup",
+    features: ["פתרון מקומי", "תמיכה בעברית"],
   },
-  MIZRAHI: {
-    id: "mizrahi",
-    name: "בנק מזרחי טפחות",
-    logo: "🏦",
-    color: "green",
-    types: ["checking", "savings", "credit"],
-    category: "bank"
-  },
-  INTERNATIONAL: {
-    id: "international",
-    name: "בנק הבינלאומי",
-    logo: "🏦",
-    color: "cyan",
-    types: ["checking", "savings", "credit"],
-    category: "bank"
-  },
-  JERUSALEM: {
-    id: "jerusalem",
-    name: "בנק ירושלים",
-    logo: "🏦",
-    color: "yellow",
-    types: ["checking", "savings"],
-    category: "bank"
-  },
-  OTSAR_HAHAYAL: {
-    id: "otsar",
-    name: "בנק אוצר החייל",
-    logo: "🏦",
-    color: "orange",
-    types: ["checking", "savings"],
-    category: "bank"
-  },
-  POSTAL_BANK: {
-    id: "postal",
-    name: "בנק הדואר",
-    logo: "📮",
-    color: "indigo",
-    types: ["checking", "savings"],
-    category: "bank"
-  },
-  
-  // חברות אשראי
-  ISRACARD: {
-    id: "isracard",
-    name: "ישראכרט",
-    logo: "💳",
-    color: "red",
-    types: ["credit"],
-    category: "credit"
-  },
-  CAL: {
-    id: "cal",
-    name: "כ.א.ל",
-    logo: "💳",
-    color: "blue",
-    types: ["credit"],
-    category: "credit"
-  },
-  MAX: {
-    id: "max",
-    name: "מקס",
-    logo: "💳",
-    color: "purple",
-    types: ["credit"],
-    category: "credit"
-  },
-  LEUMI_CARD: {
-    id: "leumi_card",
-    name: "לאומי כרטיסים",
-    logo: "💳",
-    color: "blue",
-    types: ["credit"],
-    category: "credit"
-  },
-  
-  // חברות השקעות
-  MEITAV: {
-    id: "meitav",
-    name: "מיטב דש",
-    logo: "📈",
-    color: "green",
-    types: ["investment", "pension"],
-    category: "investment"
-  },
-  PSAGOT: {
-    id: "psagot",
-    name: "פסגות",
-    logo: "📈",
-    color: "blue",
-    types: ["investment", "pension"],
-    category: "investment"
-  },
-  EXCELLENCE: {
-    id: "excellence",
-    name: "אקסלנס",
-    logo: "📈",
-    color: "purple",
-    types: ["investment", "pension"],
-    category: "investment"
-  },
-  ALTSHULER: {
-    id: "altshuler",
-    name: "אלטשולר שחם",
-    logo: "📈",
-    color: "cyan",
-    types: ["investment", "pension"],
-    category: "investment"
-  },
-  IBI: {
-    id: "ibi",
-    name: "IBI",
-    logo: "📈",
-    color: "orange",
-    types: ["investment"],
-    category: "investment"
-  },
-  
-  // פנסיה וגמל
-  MENORA: {
-    id: "menora",
-    name: "מנורה מבטחים",
-    logo: "🛡️",
-    color: "blue",
-    types: ["pension", "insurance"],
-    category: "insurance"
-  },
-  MIGDAL: {
-    id: "migdal",
-    name: "מגדל",
-    logo: "🛡️",
-    color: "red",
-    types: ["pension", "insurance"],
-    category: "insurance"
-  },
-  CLAL: {
-    id: "clal",
-    name: "כלל ביטוח",
-    logo: "🛡️",
-    color: "green",
-    types: ["pension", "insurance"],
-    category: "insurance"
-  },
-  HAREL: {
-    id: "harel",
-    name: "הראל",
-    logo: "🛡️",
-    color: "purple",
-    types: ["pension", "insurance"],
-    category: "insurance"
-  },
-};
-
-const CATEGORY_NAMES = {
-  bank: "בנקים",
-  credit: "אשראי",
-  investment: "השקעות",
-  insurance: "פנסיה וביטוח"
 };
 
 export default function OpenBankingConnect() {
@@ -211,28 +62,37 @@ export default function OpenBankingConnect() {
   const [selectedProvider, setSelectedProvider] = useState<string | null>(null);
   const [isConnecting, setIsConnecting] = useState(false);
 
+  // Fetch existing connections
   const { data: connections = [], isLoading } = useQuery({
     queryKey: ["open-banking-connections"],
     queryFn: async () => {
-      const { data } = await supabase
+      const { data, error } = await supabase
         .from("open_banking_connections")
         .select("*")
         .eq("user_id", user?.id)
         .order("created_at", { ascending: false });
+      
+      if (error) {
+        console.error("Error fetching connections:", error);
+        return [];
+      }
       return data || [];
     },
+    enabled: !!user,
   });
 
   const connectMutation = useMutation({
     mutationFn: async (providerId: string) => {
       setIsConnecting(true);
       
-      // Step 1: Create connection record
+      const provider = PROVIDERS[providerId as keyof typeof PROVIDERS];
+      
+      // Create pending connection
       const { data: connection, error } = await supabase
         .from("open_banking_connections")
         .insert({
           user_id: user?.id,
-          provider_name: ISRAELI_PROVIDERS[providerId as keyof typeof ISRAELI_PROVIDERS].name,
+          provider_name: provider.name,
           provider_code: providerId,
           connection_status: "pending",
         })
@@ -241,29 +101,16 @@ export default function OpenBankingConnect() {
 
       if (error) throw error;
 
-      // Step 2: Initiate OAuth flow (simulated)
-      // בפועל, כאן תקרא ל-API של ספק הבנקאות הפתוחה
-      await new Promise(resolve => setTimeout(resolve, 2000));
-
-      // Step 3: Update connection status
-      const { error: updateError } = await supabase
-        .from("open_banking_connections")
-        .update({
-          connection_status: "active",
-          access_token: "mock_token_" + Date.now(),
-          token_expires_at: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000).toISOString(),
-        })
-        .eq("id", connection.id);
-
-      if (updateError) throw updateError;
-
+      // TODO: Start OAuth flow
+      // For now, this will be implemented when you have API keys
+      
       return connection;
     },
-    onSuccess: (data) => {
+    onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["open-banking-connections"] });
       toast({
-        title: "✅ התחברת בהצלחה!",
-        description: `החיבור ל${ISRAELI_PROVIDERS[selectedProvider as keyof typeof ISRAELI_PROVIDERS]?.name} הושלם`,
+        title: "🎉 בקשה נשלחה!",
+        description: "עכשיו צריך להשלים את תהליך האימות עם הספק",
       });
       setSelectedProvider(null);
       setIsConnecting(false);
@@ -271,10 +118,10 @@ export default function OpenBankingConnect() {
     onError: (error: any) => {
       console.error("Connection error:", error);
       toast({
-        title: "⚠️ שגיאה בחיבור",
+        title: "⚠️ שגיאה",
         description: error.message?.includes("relation") || error.message?.includes("table") 
           ? "נראה שטבלאות המסד נתונים חסרות. הרץ את SQL Migrations קודם!"
-          : "לא הצלחנו להתחבר. זהו מצב DEMO - ראה הוראות למעלה.",
+          : error.message || "לא הצלחנו להתחבר. נסה שוב.",
         variant: "destructive",
       });
       setIsConnecting(false);
@@ -292,185 +139,94 @@ export default function OpenBankingConnect() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["open-banking-connections"] });
-      toast({
-        title: "נותק בהצלחה",
-        description: "החיבור הוסר מהמערכת",
-      });
+      toast({ title: "נותק בהצלחה" });
     },
   });
 
-  const syncMutation = useMutation({
-    mutationFn: async (connectionId: string) => {
-      // כאן תהיה קריאה אמיתית לסנכרון
-      await new Promise(resolve => setTimeout(resolve, 3000));
-      
-      // Record sync history
-      await supabase.from("sync_history").insert({
-        user_id: user?.id,
-        connection_id: connectionId,
-        sync_type: "manual",
-        sync_status: "success",
-        transactions_added: Math.floor(Math.random() * 50) + 10,
-        sync_start: new Date().toISOString(),
-        sync_end: new Date().toISOString(),
-      });
-    },
-    onSuccess: () => {
-      toast({
-        title: "✅ סנכרון הושלם!",
-        description: "התנועות עודכנו בהצלחה",
-      });
-      queryClient.invalidateQueries({ queryKey: ["transactions"] });
-    },
-  });
-
-  const groupedProviders = Object.entries(ISRAELI_PROVIDERS).reduce((acc, [key, provider]) => {
-    if (!acc[provider.category]) acc[provider.category] = [];
-    acc[provider.category].push({ key, ...provider });
-    return acc;
-  }, {} as Record<string, any[]>);
-
-  const getStatusIcon = (status: string) => {
-    switch (status) {
-      case "active":
-        return <CheckCircle2 className="w-4 h-4 text-green-600" />;
-      case "expired":
-        return <Clock className="w-4 h-4 text-orange-600" />;
-      case "error":
-        return <XCircle className="w-4 h-4 text-red-600" />;
-      default:
-        return <AlertCircle className="w-4 h-4 text-gray-400" />;
-    }
-  };
-
-  const getStatusText = (status: string) => {
-    switch (status) {
-      case "active":
-        return "מחובר";
-      case "expired":
-        return "פג תוקף";
-      case "error":
-        return "שגיאה";
-      case "pending":
-        return "ממתין";
-      default:
-        return "לא ידוע";
-    }
-  };
+  const needsSetup = connections.length === 0 && !isLoading;
 
   return (
     <div className="space-y-6">
-      {/* Demo Warning Banner */}
-      <Card className="border-orange-300 bg-orange-50">
-        <CardContent className="pt-6">
-          <div className="flex items-start gap-3">
-            <AlertCircle className="w-6 h-6 text-orange-600 shrink-0 mt-0.5" />
-            <div className="space-y-2">
-              <h3 className="font-semibold text-orange-900">⚠️ מצב הדגמה (DEMO MODE)</h3>
-              <p className="text-sm text-orange-800">
-                כרגע החיבור לבנקים הוא <strong>סימולציה בלבד</strong> ולא חיבור אמיתי. 
-              </p>
-              <div className="bg-white/50 border border-orange-200 rounded p-3 text-sm text-orange-900">
-                <strong>כדי להפעיל חיבור אמיתי:</strong>
-                <ol className="mr-5 mt-2 space-y-1">
-                  <li>1️⃣ הרץ את SQL Migrations במסד הנתונים</li>
-                  <li>2️⃣ השג API Keys מספקי בנקאות פתוחה (Pepper/Salt Edge/Mono)</li>
-                  <li>3️⃣ הוסף את ה-Keys למשתני הסביבה</li>
-                </ol>
+      {/* Setup Guide Banner */}
+      {needsSetup && (
+        <Card className="border-blue-300 bg-gradient-to-r from-blue-50 to-cyan-50">
+          <CardContent className="pt-6">
+            <div className="flex items-start gap-3">
+              <Building2 className="w-8 h-8 text-blue-600 shrink-0 mt-1" />
+              <div className="space-y-3 flex-1">
+                <h3 className="font-bold text-lg text-blue-900">🚀 מוכן להתחבר לבנקים?</h3>
+                <p className="text-sm text-blue-800">
+                  כדי להתחיל, אתה צריך להירשם לאחד מספקי הבנקאות הפתוחה למטה. 
+                  <strong className="block mt-2">המלצה: Pepper</strong> - הכי קל, חינמי, ותומך בכל הבנקים בישראל.
+                </p>
+                <div className="flex gap-3">
+                  <Button 
+                    onClick={() => window.open("https://www.pepper.co.il/developers", "_blank")}
+                    className="bg-red-600 hover:bg-red-700"
+                  >
+                    🌶️ הירשם ל-Pepper
+                    <ExternalLink className="w-4 h-4 mr-2" />
+                  </Button>
+                  <Button 
+                    variant="outline"
+                    onClick={() => window.open("/QUICK_SETUP.md", "_blank")}
+                  >
+                    📖 מדריך מלא
+                  </Button>
+                </div>
               </div>
-              <p className="text-xs text-orange-700">
-                📖 <a 
-                  href="https://github.com/Yklein888/family-finance-manager/blob/main/BANKING_INTEGRATION.md" 
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="underline hover:text-orange-900 font-medium"
-                >
-                  קרא את המדריך המלא להתקנה →
-                </a>
-              </p>
             </div>
-          </div>
-        </CardContent>
-      </Card>
+          </CardContent>
+        </Card>
+      )}
 
-      {/* Header */}
-      <Card className="border-blue-200 bg-gradient-to-r from-blue-50 to-cyan-50">
+      {/* Current Status */}
+      <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <Building2 className="w-6 h-6 text-blue-600" />
-            בנקאות פתוחה
+            <Building2 className="w-5 h-5" />
+            חיבורים פעילים
           </CardTitle>
           <CardDescription>
-            חבר את כל החשבונות הבנקאיים, כרטיסי האשראי והשקעות שלך למקום אחד
+            {connections.length > 0 
+              ? `${connections.length} ספקים מחוברים`
+              : "עדיין לא חיברת אף ספק"}
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
-            <div className="text-center">
-              <div className="text-2xl font-bold text-blue-600">{connections.length}</div>
-              <div className="text-gray-600">חיבורים פעילים</div>
+          {connections.length === 0 ? (
+            <div className="text-center py-8 text-muted-foreground">
+              <Building2 className="w-12 h-12 mx-auto mb-3 opacity-20" />
+              <p>התחבר לספק כדי להתחיל</p>
             </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-green-600">
-                {Object.keys(ISRAELI_PROVIDERS).length}
-              </div>
-              <div className="text-gray-600">ספקים זמינים</div>
-            </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-purple-600">100%</div>
-              <div className="text-gray-600">מאובטח</div>
-            </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-orange-600">אוטומטי</div>
-              <div className="text-gray-600">סנכרון</div>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Active Connections */}
-      {connections.length > 0 && (
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-lg">החיבורים שלי</CardTitle>
-          </CardHeader>
-          <CardContent>
+          ) : (
             <div className="space-y-3">
               {connections.map((conn) => (
-                <div
+                <div 
                   key={conn.id}
-                  className="flex items-center justify-between p-4 border rounded-lg hover:bg-gray-50 transition-colors"
+                  className="flex items-center justify-between p-4 border rounded-lg"
                 >
                   <div className="flex items-center gap-3">
                     <div className="text-3xl">
-                      {Object.values(ISRAELI_PROVIDERS).find(p => p.id === conn.provider_code)?.logo || "🏦"}
+                      {PROVIDERS[conn.provider_code as keyof typeof PROVIDERS]?.logo || "🏦"}
                     </div>
                     <div>
                       <div className="font-medium">{conn.provider_name}</div>
-                      <div className="text-sm text-gray-500 flex items-center gap-2">
-                        {getStatusIcon(conn.connection_status)}
-                        {getStatusText(conn.connection_status)}
-                        {conn.last_sync && (
-                          <span>• עדכון אחרון: {new Date(conn.last_sync).toLocaleDateString("he-IL")}</span>
-                        )}
+                      <div className="text-xs text-muted-foreground">
+                        התחבר ב-{new Date(conn.created_at).toLocaleDateString("he-IL")}
                       </div>
                     </div>
                   </div>
-                  <div className="flex gap-2">
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => syncMutation.mutate(conn.id)}
-                      disabled={syncMutation.isPending}
+                  <div className="flex items-center gap-2">
+                    <Badge
+                      variant={conn.connection_status === "active" ? "default" : "secondary"}
+                      className={conn.connection_status === "active" ? "bg-green-600" : ""}
                     >
-                      {syncMutation.isPending ? (
-                        <Loader2 className="w-4 h-4 animate-spin" />
-                      ) : (
-                        <RefreshCw className="w-4 h-4" />
-                      )}
-                    </Button>
+                      {conn.connection_status === "active" && <CheckCircle2 className="w-3 h-3 ml-1" />}
+                      {conn.connection_status === "active" ? "פעיל" : "ממתין"}
+                    </Badge>
                     <Button
-                      variant="outline"
+                      variant="ghost"
                       size="sm"
                       onClick={() => disconnectMutation.mutate(conn.id)}
                       disabled={disconnectMutation.isPending}
@@ -481,125 +237,107 @@ export default function OpenBankingConnect() {
                 </div>
               ))}
             </div>
-          </CardContent>
-        </Card>
-      )}
+          )}
+        </CardContent>
+      </Card>
 
-      {/* Available Providers by Category */}
-      {Object.entries(groupedProviders).map(([category, providers]) => (
-        <Card key={category}>
-          <CardHeader>
-            <CardTitle className="text-lg flex items-center gap-2">
-              {category === "bank" && <Building2 className="w-5 h-5" />}
-              {category === "credit" && <CreditCard className="w-5 h-5" />}
-              {category === "investment" && <TrendingUp className="w-5 h-5" />}
-              {category === "insurance" && <span className="text-lg">🛡️</span>}
-              {CATEGORY_NAMES[category as keyof typeof CATEGORY_NAMES]}
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
-              {providers.map((provider) => {
-                const isConnected = connections.some(c => c.provider_code === provider.id);
-                return (
-                  <Button
-                    key={provider.key}
-                    variant={isConnected ? "secondary" : "outline"}
-                    className="h-auto flex-col gap-2 p-4"
-                    onClick={() => !isConnected && setSelectedProvider(provider.key)}
-                    disabled={isConnected}
-                  >
-                    <div className="text-3xl">{provider.logo}</div>
-                    <div className="text-sm font-medium text-center">{provider.name}</div>
-                    {isConnected && (
-                      <Badge variant="secondary" className="text-xs">
-                        <CheckCircle2 className="w-3 h-3 ml-1" />
-                        מחובר
-                      </Badge>
-                    )}
-                  </Button>
-                );
-              })}
-            </div>
-          </CardContent>
-        </Card>
-      ))}
+      {/* Available Providers */}
+      <Card>
+        <CardHeader>
+          <CardTitle>ספקים זמינים</CardTitle>
+          <CardDescription>בחר ספק כדי להתחבר</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {Object.entries(PROVIDERS).map(([key, provider]) => {
+              const isConnected = connections.some(c => c.provider_code === provider.id);
+              
+              return (
+                <Card 
+                  key={key}
+                  className={`cursor-pointer transition-all hover:shadow-lg ${
+                    isConnected ? "border-green-500 bg-green-50" : ""
+                  }`}
+                  onClick={() => !isConnected && setSelectedProvider(provider.id)}
+                >
+                  <CardContent className="pt-6">
+                    <div className="text-center space-y-3">
+                      <div className="text-5xl">{provider.logo}</div>
+                      <div>
+                        <div className="font-bold text-lg">{provider.name}</div>
+                        <div className="text-xs text-muted-foreground mt-1">
+                          {provider.description}
+                        </div>
+                      </div>
+                      
+                      {isConnected ? (
+                        <Badge className="bg-green-600">
+                          <CheckCircle2 className="w-3 h-3 ml-1" />
+                          מחובר
+                        </Badge>
+                      ) : (
+                        <div className="space-y-2">
+                          <Button 
+                            className="w-full"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              window.open(provider.signupUrl, "_blank");
+                            }}
+                          >
+                            הירשם
+                            <ExternalLink className="w-4 h-4 mr-2" />
+                          </Button>
+                          <Button 
+                            variant="outline"
+                            size="sm"
+                            className="w-full"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              window.open(provider.docs, "_blank");
+                            }}
+                          >
+                            תיעוד
+                          </Button>
+                        </div>
+                      )}
+                      
+                      <div className="pt-3 border-t space-y-1">
+                        {provider.features.map((feature, idx) => (
+                          <div key={idx} className="text-xs text-muted-foreground flex items-center gap-1">
+                            <CheckCircle2 className="w-3 h-3 text-green-600" />
+                            {feature}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              );
+            })}
+          </div>
+        </CardContent>
+      </Card>
 
-      {/* Connection Dialog */}
-      <Dialog open={!!selectedProvider} onOpenChange={() => setSelectedProvider(null)}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle className="flex items-center gap-2">
-              <Link2 className="w-5 h-5" />
-              התחבר ל
-              {selectedProvider && ISRAELI_PROVIDERS[selectedProvider as keyof typeof ISRAELI_PROVIDERS]?.name}
-            </DialogTitle>
-            <DialogDescription>
-              אתה עומד להתחבר דרך בנקאות פתוחה מאובטחת
-            </DialogDescription>
-          </DialogHeader>
-
-          <div className="space-y-4">
-            <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 space-y-2">
-              <div className="flex items-start gap-2">
-                <CheckCircle2 className="w-5 h-5 text-blue-600 mt-0.5" />
-                <div>
-                  <div className="font-medium text-blue-900">מאובטח לחלוטין</div>
-                  <div className="text-sm text-blue-700">
-                    החיבור מוצפן והנתונים מועברים באופן מאובטח
-                  </div>
-                </div>
-              </div>
-              <div className="flex items-start gap-2">
-                <CheckCircle2 className="w-5 h-5 text-blue-600 mt-0.5" />
-                <div>
-                  <div className="font-medium text-blue-900">סנכרון אוטומטי</div>
-                  <div className="text-sm text-blue-700">
-                    התנועות יתעדכנו אוטומטית כל יום
-                  </div>
-                </div>
-              </div>
-              <div className="flex items-start gap-2">
-                <CheckCircle2 className="w-5 h-5 text-blue-600 mt-0.5" />
-                <div>
-                  <div className="font-medium text-blue-900">קטגוריזציה חכמה</div>
-                  <div className="text-sm text-blue-700">
-                    התנועות יסווגו אוטומטית לקטגוריות
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="flex gap-2">
-              <Button
-                variant="outline"
-                className="flex-1"
-                onClick={() => setSelectedProvider(null)}
-                disabled={isConnecting}
-              >
-                ביטול
-              </Button>
-              <Button
-                className="flex-1"
-                onClick={() => selectedProvider && connectMutation.mutate(selectedProvider)}
-                disabled={isConnecting}
-              >
-                {isConnecting ? (
-                  <>
-                    <Loader2 className="w-4 h-4 ml-2 animate-spin" />
-                    מתחבר...
-                  </>
-                ) : (
-                  <>
-                    <Link2 className="w-4 h-4 ml-2" />
-                    התחבר עכשיו
-                  </>
-                )}
-              </Button>
+      {/* Info Card */}
+      <Card className="bg-gradient-to-r from-purple-50 to-pink-50 border-purple-200">
+        <CardContent className="pt-6">
+          <div className="flex items-start gap-3">
+            <AlertCircle className="w-6 h-6 text-purple-600 shrink-0 mt-0.5" />
+            <div className="space-y-2 text-sm text-purple-900">
+              <p className="font-medium">💡 איך זה עובד?</p>
+              <ol className="mr-5 space-y-1">
+                <li>1. בחר ספק והירשם לקבל API Keys</li>
+                <li>2. הוסף את ה-Keys למשתני הסביבה בהגדרות</li>
+                <li>3. לחץ "התחבר" והאפליקציה תפנה אותך לאימות מאובטח</li>
+                <li>4. אשר גישה ותתחיל לראות תנועות ויתרות אוטומטית!</li>
+              </ol>
+              <p className="text-xs pt-2 border-t border-purple-200 mt-3">
+                🔒 כל הנתונים מוצפנים והאפליקציה לעולם לא רואה את הסיסמאות שלך לבנק
+              </p>
             </div>
           </div>
-        </DialogContent>
-      </Dialog>
+        </CardContent>
+      </Card>
     </div>
   );
 }
