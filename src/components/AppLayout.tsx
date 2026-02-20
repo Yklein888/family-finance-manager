@@ -17,10 +17,14 @@ import {
   Landmark,
   FolderTree,
   HandCoins,
+  Trophy,
+  MessageCircle,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import NotificationsBell from "@/components/NotificationsBell";
+import NotificationCenter from "@/components/NotificationCenter";
 
 const navItems = [
   { to: "/", icon: LayoutDashboard, label: "דשבורד" },
@@ -33,6 +37,8 @@ const navItems = [
   { to: "/recurring", icon: RefreshCw, label: "תשלומים חוזרים" },
   { to: "/institutional", icon: Landmark, label: "מוסדיים" },
   { to: "/insights", icon: TrendingUp, label: "תובנות" },
+  { to: "/achievements", icon: Trophy, label: "הישגים 🎮" },
+  { to: "/chatbot", icon: MessageCircle, label: "פינקי 🤖" },
   { to: "/reports", icon: BarChart3, label: "דוחות" },
   { to: "/banking", icon: Building2, label: "בנקאות" },
   { to: "/settings", icon: Settings, label: "הגדרות" },
@@ -57,7 +63,14 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
           <div className="flex items-center justify-center w-9 h-9 rounded-xl gradient-primary shrink-0">
             <Wallet className="w-5 h-5 text-primary-foreground" />
           </div>
-          {!collapsed && <span className="font-heading font-bold text-lg">FinFamily</span>}
+          {!collapsed && (
+            <>
+              <span className="font-heading font-bold text-lg">FinFamily</span>
+              <div className="mr-auto">
+                <NotificationsBell />
+              </div>
+            </>
+          )}
         </div>
 
         {/* Nav */}
@@ -104,6 +117,13 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
 
       {/* Main content */}
       <main className={cn("flex-1 transition-all duration-300", collapsed ? "mr-[72px]" : "mr-60")}>
+        {/* Top bar */}
+        <div className="sticky top-0 z-30 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b">
+          <div className="flex items-center justify-end h-14 px-6 gap-2">
+            <NotificationCenter />
+          </div>
+        </div>
+        
         <div className="p-6 max-w-7xl mx-auto">{children}</div>
       </main>
     </div>
